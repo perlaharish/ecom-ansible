@@ -1,4 +1,5 @@
 - name: Setup ecom frontend
   hosts: all
   become: true
-  roles: frontend
+  roles:
+    - frontend
