@@ -1,0 +1,52 @@
+- name: Setup NodeJS service
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy the service file
+      ansible.builtin.copy:
+        src: {{component}}.service
+        dest: /etc/systemd/system/{{component}}.service
+
+    - name: Enable Node js module
+      ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+    - name: Install NodeJS application
+      ansible.builtin.yum:
+        name: nodejs
+        state: installed
+    - name: User creation and Download application content
+      ansible.builtin.import_playbook: pre-req.yml
+    - name: Install application dependencies
+      ansible.builtin.shell: npm install
+    - name: Restart application service
+      ansible.builtin.import_playbook: systemd.yml
+    - name: Install mongo shell
+      ansible.builtin.yum:
+        name: mongodb-org-shell
+
+    - name: Load application schema
+      ansible.builtin.shell: mongo --host 172.31.40.180 </app/schema/{{component}}.js
+
+
+
+
+
+
+
+#echo -e "\e[32m#########copy the service files####[0m"
+#cp ${component}.service /etc/systemd/system/${component}.service &>> ${log}
+#cp mongo.repo /etc/yum.repos.d/mongo.repo &>> ${log}
+#func_exist_status
+#echo -e "\e[32m#########Reload daemon service #########\e[0m"
+#systemctl daemon-reload  &>> ${log}
+#dnf module disable nodejs -y &>> ${log}
+#dnf module enable nodejs:18 -y &>> ${log}
+#func_exist_status
+#echo -e "\e[32m#########Install nodejs #########\e[0m"
+#dnf install nodejs -y &>> ${log}
+#func_prereq
+#func_exist_status
+#echo -e "\e[32m#########Install app dependent files #########\e[0m"
+#npm install &>> ${log}
+#func_exist_status
+#func_servicerestart
+#func_schema_setup

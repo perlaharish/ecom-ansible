@@ -1,0 +1,28 @@
+- name: Pre requisites setup
+  hosts: all
+  become: true
+  tasks:
+    - name: roboshop User creation
+      ansible.builtin.user:
+        name: roboshop
+    - name: Download application content and extract
+      ansible.built.unarchive:
+        src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}.zip
+          dest: /app
+          remote_src: yes
+
+
+#echo -e "\e[32m#########user add #########\e[0m"
+#id roboshop &>> ${log}
+#if [ $? -ne 0 ]; then
+#useradd roboshop &>> ${log}
+#fi
+#func_exist_status
+#echo -e "\e[32m#########copy the code files #########\e[0m"
+#rm -rf /app &>> ${log}
+#mkdir /app &>> ${log}
+#curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>> ${log}
+#cd /app &>> ${log}
+#func_exist_status
+#echo -e "\e[32m#########unzip the repo files #########\e[0m"
+#unzip /tmp/${component}.zip &>> ${log}

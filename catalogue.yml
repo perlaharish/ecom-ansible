@@ -1,0 +1,17 @@
+- name: Setup catalogue service
+  hosts: all
+  become: true
+  vars:
+    component: catalogue
+  tasks:
+    - name: Setup NodeJS
+      ansible.builtin.import_playbook: nodejs.yml
+
+
+
+
+
+#component=catalogue
+#schema_type=mongodb
+#source comman.sh
+#func_nodejs
