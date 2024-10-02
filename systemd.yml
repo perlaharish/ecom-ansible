@@ -1,7 +1,4 @@
-- name: setup systemd
-  hosts: all
-  become: true
-  tasks:
+
     - name: Reload the daemon service
       ansible.builtin.systemd_service:
         name: {{component}}
