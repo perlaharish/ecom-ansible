@@ -7,9 +7,3 @@
         name: {{component}}
         state: restarted
         daemon_reload: true
-
-
-#  echo -e "\e[32m#########Restart ${component} service #########\e[0m"
-#  systemctl enable ${component} &>> ${log}
-#  systemctl restart ${component} &>> ${log}
-#  func_exist_status
