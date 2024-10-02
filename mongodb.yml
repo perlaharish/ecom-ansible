@@ -1,0 +1,36 @@
+- name: Setup Mongo DB
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy mongo db repo file
+      ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+    - name: Install Mongo DB
+      ansible.builtin.yum:
+        name: mongodb-org
+        state: installed
+    - name: update mongo db listener configuration
+      ansible.builtin.replace:
+        path: /etc/mongod.conf
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+
+    - name: Install Mongo DB
+      ansible.builtin.systemd:
+        name: mongod
+        state: restarted
+        enabled: yes
+
+
+
+
+
+
+
+
+#cp mongo.repo /etc/yum.repos.d/mongo.repo
+#dnf install mongodb-org -y
+#systemctl enable mongod
+#sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+#systemctl restart mongod
