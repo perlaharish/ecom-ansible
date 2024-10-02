@@ -4,8 +4,8 @@
   tasks:
     - name: Copy the service file
       ansible.builtin.copy:
-        src: {{component}}.service
-        dest: /etc/systemd/system/{{component}}.service
+        src: "{{ component }}.service"
+        dest: /etc/systemd/system/{{ component }}.service
 
     - name: Enable Node js module
       ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
@@ -24,4 +24,4 @@
         name: mongodb-org-shell
 
     - name: Load application schema
-      ansible.builtin.shell: mongo --host 172.31.40.180 </app/schema/{{component}}.js
+      ansible.builtin.shell: mongo --host 172.31.40.180 </app/schema/{{ component }}.js
