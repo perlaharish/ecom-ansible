@@ -7,9 +7,9 @@
         name: roboshop
     - name: Download application content and extract
       ansible.built.unarchive:
-        src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}.zip
-          dest: /app
-          remote_src: yes
+        src:https://roboshop-artifacts.s3.amazonaws.com/{{component}}.zip
+          dest:/app
+          remote_src:yes
 
 
 #echo -e "\e[32m#########user add #########\e[0m"
