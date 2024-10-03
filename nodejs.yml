@@ -13,6 +13,8 @@
       ansible.builtin.import_tasks: pre-req.yml
     - name: Install application dependencies
       ansible.builtin.shell: npm install
+      args:
+        chdir: /app
     - name: Restart application service
       ansible.builtin.import_tasks: systemd.yml
     - name: Install mongo shell
