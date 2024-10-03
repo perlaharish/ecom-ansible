@@ -1,6 +1,5 @@
-
-    - name: Reload the daemon service
-      ansible.builtin.systemd_service:
-        name: {{component}}
-        state: restarted
-        daemon_reload: true
+- name: Reload the daemon service
+  ansible.builtin.systemd_service:
+    name: {{component}}
+    state: restarted
+    daemon_reload: true

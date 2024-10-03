@@ -1,8 +1,9 @@
-    - name: roboshop User creation
-      ansible.builtin.user:
-        name: roboshop
-    - name: Download application content and extract
-      ansible.built.unarchive:
-        src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}.zip
-        dest: /app
-        remote_src: yes
+- name: roboshop User creation
+  ansible.builtin.user:
+    name: roboshop
+
+- name: Download application content and extract
+  ansible.builtin.unarchive:
+    src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}.zip
+    dest: /app
+    remote_src: yes
