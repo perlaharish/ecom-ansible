@@ -3,7 +3,10 @@
   become: true
   tasks:
     - name: Install redis remi repo file
-      ansible.builtin.shell: yum https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+      ansible.builtin.yum:
+        name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+        state: installed
+
     - name: Enable redis module
       ansible.builtin.shell: yum module enable redis:remi-6.2 -y
     - name: Install redis application service
