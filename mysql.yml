@@ -1,0 +1,36 @@
+- name: Setup MySQL database service
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy the mysql repo
+      ansible.builtin.copy:
+        src: mysql.repo
+        dest: /etc/yum.repos.d/mysql.repo
+
+    - name: Disable mysql old modules
+      ansible.builtin.shell: yum module disable mysql -y
+    - name: Install MySQl db service
+      ansible.builtin.yum:
+        name: mysql-community-server
+        state: installed
+    - name: start the mysql db service
+      ansible.builtin.systemd:
+        name: mysqld
+        state: restarted
+        enabled: yes
+    - name: setup the mysql root password
+      ansible.builtin.shell: mysql_secure_installation --set-root-pass RoboShop@1
+
+
+
+#mysql_root_pass=$1
+#cp mysql.repo /etc/yum.repos.d/mysql.repo
+#if [ -z ${mysql_root_pass} ]; then
+#  echo "Imported password missing"
+#  exit
+#  fi
+#dnf module disable mysql -y
+#dnf install mysql-community-server -y
+#systemctl enable mysqld
+#systemctl restart mysqld
+#mysql_secure_installation --set-root-pass ${mysql_root_pass}

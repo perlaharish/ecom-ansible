@@ -1,0 +1,41 @@
+- name: Copy the service file
+  ansible.builtin.copy:
+    src: "{{component}}".service
+    dest: /etc/systemd/system/{{component}}.service
+- name: Install maven package
+  ansible.builtin.yum:
+    name: maven
+    state: installed
+- name: Download the application content and extract it
+  ansible.builtin.import_tasks: pre-req.yml
+- name: Install application dependencies
+  ansible.builtin.shell: mvn clean package ; mv target/${component}-1.0.jar {{component}}.jar
+  args:
+    chdir: /app
+- name: Schema setup for java application
+  ansible.builtin.shell: mysql -h 172.31.47.181 -uroot -pRoboShop@1 < /app/schema/{{component}}.sql
+
+- name: Service reload
+  ansible.builtin.import_tasks: systemd.yml
+
+
+
+#echo -e "\e[32m#########copy daemon files #########\e[0m"
+#cp ${component}.service /etc/systemd/system/${component}.service
+#func_exist_status
+#echo -e "\e[32m#########reload daemon service #########\e[0m"
+#systemctl daemon-reload
+#func_exist_status
+#echo -e "\e[32m#########Install maven #########\e[0m"
+#dnf install maven -y
+#func_exist_status
+#echo -e "\e[32m#########copy code and unzip #########\e[0m"
+#func_prereq
+#echo -e "\e[32m########build maven package #########\e[0m"
+#mvn clean package
+#mv target/${component}-1.0.jar ${component}.jar
+#func_exist_status
+#
+#func_schema_setup
+#
+#func_servicerestart
