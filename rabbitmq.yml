@@ -17,7 +17,7 @@
         enabled: yes
 
     - name: Add rabbitmq application user
-      ansible.builtin.rabbit_user:
+      community.rabbitmq.rabbitmq_user:
         user: roboshop
         password: roboshop123
         vhost: /
