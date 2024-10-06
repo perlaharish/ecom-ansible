@@ -21,7 +21,7 @@
 
 - name: Install MySQl db service
   ansible.builtin.yum:
-    name: mysql-community-server
+    name: mysql
     state: installed
 
 - name: Schema setup for java application
