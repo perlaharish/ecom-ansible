@@ -25,7 +25,7 @@
     state: installed
 
 - name: Schema setup for java application
-  ansible.builtin.shell: mysql -h 172.31.47.181 -uroot -pRoboShop@1 < /app/schema/{{component}}.sql
+  ansible.builtin.shell: mysql -h 172.31.34.64 -uroot -pRoboShop@1 < /app/schema/{{component}}.sql
 
 - name: Service reload
   ansible.builtin.import_tasks: systemd.yml
