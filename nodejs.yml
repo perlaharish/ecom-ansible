@@ -25,6 +25,7 @@
       ansible.builtin.yum:
         name: mongodb-org-shell
 
+
     - name: Load application schema
       ansible.builtin.shell: mongo --host 172.31.40.180 </app/schema/{{component}}.js
       when: schema is defined

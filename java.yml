@@ -1,7 +1,13 @@
+- name: Copy the mysql repo
+  ansible.builtin.copy:
+    src: mysql.repo
+    dest: /etc/yum.repos.d/mysql.repo
+
 - name: Copy the service file
   ansible.builtin.copy:
     src: "{{ component }}.service"
     dest: /etc/systemd/system/{{component}}.service
+
 - name: Install maven package
   ansible.builtin.yum:
     name: maven
@@ -12,6 +18,12 @@
   ansible.builtin.shell: mvn clean package ; mv target/{{component}}-1.0.jar {{component}}.jar
   args:
     chdir: /app
+
+- name: Install MySQl db service
+  ansible.builtin.yum:
+    name: mysql-community-server
+    state: installed
+
 - name: Schema setup for java application
   ansible.builtin.shell: mysql -h 172.31.47.181 -uroot -pRoboShop@1 < /app/schema/{{component}}.sql
 
